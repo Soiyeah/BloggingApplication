@@ -1,7 +1,6 @@
 package com.example.Blogger.Repositories;
 
 import com.example.Blogger.Entities.Author;
-import com.example.Blogger.space.SpaceShip;
 import org.springframework.cloud.gcp.data.datastore.repository.DatastoreRepository;
 import org.springframework.cloud.gcp.data.datastore.repository.query.Query;
 import org.springframework.data.repository.query.Param;

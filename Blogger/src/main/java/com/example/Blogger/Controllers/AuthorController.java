@@ -6,10 +6,7 @@ import com.example.Blogger.Services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +26,35 @@ public class AuthorController {
 
     // Get list of all authors
     @GetMapping
-    public ResponseEntity<List<AuthorDto>> getCustomers(){
+    public ResponseEntity<List<AuthorDto>> getAuthors(){
         List<Author> authors = new ArrayList<>();
         authorService.getAuthors().iterator().forEachRemaining(authors::add);
-        List<AuthorDto> customersDto = authors.stream().map(AuthorDto::from).collect(Collectors.toList());
-        return new ResponseEntity<>(customersDto, HttpStatus.OK);
+        List<AuthorDto> authorsDto = authors.stream().map(AuthorDto::from).collect(Collectors.toList());
+        return new ResponseEntity<>(authorsDto, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "{id}")
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable final Long id){
+        Author author = authorService.getAuthor(id);
+        return new ResponseEntity<>(AuthorDto.from(author),HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<AuthorDto> addAuthor(@RequestBody AuthorDto authorDto){
+        Author author = authorService.addAuthor(Author.from(authorDto));
+        return new ResponseEntity<>(AuthorDto.from(author), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "{id}")
+    public ResponseEntity<AuthorDto> updateAuthor(@PathVariable final Long id, @RequestBody AuthorDto authorDto){
+        Author author = authorService.updateAuthor(id,Author.from(authorDto));
+        return new ResponseEntity<>(AuthorDto.from(author), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable final Long id){
+        Author author = authorService.deleteAuthor(id);
+        return new ResponseEntity<>(AuthorDto.from(author), HttpStatus.OK);
     }
 
 

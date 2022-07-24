@@ -1,5 +1,6 @@
 package com.example.Blogger.Entities;
 
+import com.example.Blogger.DTO.AuthorDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,16 @@ public class Author {
     private String username;
     private String email;
     private String address;
+
+    public static Author from(AuthorDto authorDto){
+        Author author = new Author();
+        author.setId(authorDto.getId());
+        author.setName(authorDto.getName());
+        author.setUsername(authorDto.getUsername());
+        author.setEmail(authorDto.getEmail());
+        author.setAddress(authorDto.getAddress());
+        return author;
+    }
+
+
 }
